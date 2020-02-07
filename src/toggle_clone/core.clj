@@ -1,6 +1,21 @@
-(ns toggle-clone.core)
+(ns toggle-clone.core
+  (:use ring.util.response))
+(defn handler [request]
+  (->
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+    ; TODO use a variable to get path
+    (response
+      (cond
+          (= (get request :uri) "/") (str "{\"requestPath\": \"" 1 "\"}")
+          (= (get request :uri) "/test") (str "{\"Hello\": \"World\"}")
+          (= (get request :uri) "/test1") (str "{\"Hello\": \"World1\"}")
+          :else (str "{\"NOT\": \"MATCHED\"}")
+          )
+      )
+
+
+    (content-type "application/json"))
+  )
+
+
+
